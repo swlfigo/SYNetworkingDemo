@@ -75,7 +75,13 @@
     AFHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
     switch (method) {
         case SYRequestMethodGET:
-            return [self dataTaskWithBaseRequest:request HTTPMethod:@"GET" requestSerializer:requestSerializer URLString:url parameters:param error:error];
+            if (request.resumableDownloadPath) {
+                //下载操作
+                return [self downloadTaskWithBaseRequest:request DownloadPath:request.resumableDownloadPath requestSerializer:requestSerializer URLString:url parameters:param progress:request.resumableDownloadProgressBlock error:error];
+            }else{
+                //简单HTTP请求
+               return [self dataTaskWithBaseRequest:request HTTPMethod:@"GET" requestSerializer:requestSerializer URLString:url parameters:param error:error];
+            }
         case SYRequestMethodPOST:
             return  [self dataTaskWithBaseRequest:request HTTPMethod:@"POST" requestSerializer:requestSerializer URLString:url parameters:param constructingBodyWithBlock:constructingBlock error:error];
         case SYRequestMethodHEAD:
@@ -119,6 +125,66 @@
         }
     }
     return requestSerializer;
+}
+
+- (NSURLSessionDownloadTask *)downloadTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest DownloadPath:(NSString *)downloadPath
+                                         requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+                                                 URLString:(NSString *)URLString
+                                                parameters:(id)parameters
+                                                  progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
+                                                     error:(NSError * _Nullable __autoreleasing *)error {
+    NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
+    
+    NSString *downloadTargetPath;
+    BOOL isDirectory;
+    if(![[NSFileManager defaultManager] fileExistsAtPath:downloadPath isDirectory:&isDirectory]) {
+        isDirectory = NO;
+    }
+    // If targetPath is a directory, use the file name we got from the urlRequest.
+    // Make sure downloadTargetPath is always a file, not directory.
+    if (isDirectory) {
+        NSString *fileName = [urlRequest.URL lastPathComponent];
+        downloadTargetPath = [NSString pathWithComponents:@[downloadPath, fileName]];
+    } else {
+        downloadTargetPath = downloadPath;
+    }
+
+    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadTargetPath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:downloadTargetPath error:nil];
+    }
+    
+    BOOL resumeDataFileExists = [[NSFileManager defaultManager] fileExistsAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path];
+    NSData *data = [NSData dataWithContentsOfURL:[self incompleteDownloadTempPathForDownloadPath:downloadPath]];
+    //检验数据是否完整
+    BOOL resumeDataIsValid = [SYNetworkUtils validateResumeData:data];
+    
+    BOOL canBeResumed = resumeDataFileExists && resumeDataIsValid;
+    BOOL resumeSucceeded = NO;
+    __block NSURLSessionDownloadTask *downloadTask = nil;
+    // Try to resume with resumeData.
+    // Even though we try to validate the resumeData, this may still fail and raise excecption.
+    if (canBeResumed) {
+        @try {
+            downloadTask = [_sessionManager downloadTaskWithResumeData:data progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
+            } completionHandler:
+                            ^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                [self handleRequestResult:downloadTask responseObject:filePath error:error];
+                            }];
+            resumeSucceeded = YES;
+        } @catch (NSException *exception) {
+            resumeSucceeded = NO;
+        }
+    }
+    if (!resumeSucceeded) {
+        downloadTask = [_sessionManager downloadTaskWithRequest:urlRequest progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+            return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
+        } completionHandler:
+                        ^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                            [self handleRequestResult:downloadTask responseObject:filePath error:error];
+                        }];
+    }
+    return downloadTask;
 }
 
 - (NSURLSessionDataTask *)dataTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest HTTPMethod:(NSString *)method
@@ -177,6 +243,23 @@
 
 - (void)requestDidFailWithRequest:(SYNetworkBaseRequest *)request error:(NSError *)error {
     request.error = error;
+    
+    //保存未下载的文件
+    NSData *incompleteDownloadData = error.userInfo[NSURLSessionDownloadTaskResumeData];
+    if (incompleteDownloadData) {
+        [incompleteDownloadData writeToURL:[self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath] atomically:YES];
+    }
+    
+    //获取Request下载到本地的不完整文件删除
+    if ([request.responseObject isKindOfClass:[NSURL class]]) {
+        NSURL *url = request.responseObject;
+        if (url.isFileURL && [[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+            request.responseData = [NSData dataWithContentsOfURL:url];
+            
+            [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+        }
+        request.responseObject = nil;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         if (request.failureBlock) {
             request.failureBlock(request);
@@ -189,7 +272,6 @@
     //取出Request
     SYNetworkBaseRequest *request = [[SYNetworkRequestPool sharedPool]requestWithTaskID:[NSString stringWithFormat:@"%ld",task.taskIdentifier]];
     NSError * __autoreleasing serializationError = nil;
-    NSError * __autoreleasing validationError = nil;
     
     NSError *requestError = nil;
     BOOL succeed = NO;
@@ -236,7 +318,15 @@
 
 - (void)cancelRequest:(SYNetworkBaseRequest *)request{
     NSParameterAssert(request != nil);
-    [request.requestTask cancel];
+    if (request.resumableDownloadPath) {
+        NSURLSessionDownloadTask *requestTask = (NSURLSessionDownloadTask *)request.requestTask;
+        [requestTask cancelByProducingResumeData:^(NSData *resumeData) {
+            NSURL *localUrl = [self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath];
+            [resumeData writeToURL:localUrl atomically:YES];
+        }];
+    } else {
+        [request.requestTask cancel];
+    }
     [request clearCompletionBlock];
     [[SYNetworkRequestPool sharedPool]removeRequest:request];
 }
@@ -245,6 +335,32 @@
     [[SYNetworkRequestPool sharedPool]removeAllRequest];
 }
 
+#pragma mark - Resumable Download
+
+- (NSString *)incompleteDownloadTempCacheFolder {
+    NSFileManager *fileManager = [NSFileManager new];
+    static NSString *cacheFolder;
+    
+    //在Temp下新建一个 Incomplete 文件夹
+    if (!cacheFolder) {
+        NSString *cacheDir = NSTemporaryDirectory();
+        cacheFolder = [cacheDir stringByAppendingPathComponent:@"Incomplete"];
+    }
+    
+    NSError *error = nil;
+    if(![fileManager createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
+        cacheFolder = nil;
+    }
+    return cacheFolder;
+}
+
+- (NSURL *)incompleteDownloadTempPathForDownloadPath:(NSString *)downloadPath {
+    NSString *tempPath = nil;
+    //通过下载Path来做MD5运算
+    NSString *md5URLString = [SYNetworkUtils md5StringFromString:downloadPath];
+    tempPath = [[self incompleteDownloadTempCacheFolder] stringByAppendingPathComponent:md5URLString];
+    return [NSURL fileURLWithPath:tempPath];
+}
 
 #pragma mark - Getter
 - (AFJSONResponseSerializer *)jsonResponseSerializer {

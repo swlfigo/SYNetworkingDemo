@@ -22,3 +22,10 @@
 
 @end
 
+@interface SYNetworkUtils : NSObject
+
++ (NSString *)md5StringFromString:(NSString *)string;
+
++ (BOOL)validateResumeData:(NSData *)data;
+
+@end

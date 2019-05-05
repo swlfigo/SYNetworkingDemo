@@ -28,7 +28,17 @@
         NSLog(@"");
     }];
     
+    SYNetworkRequest *downloadReq = [[SYNetworkRequest alloc]init];
     
+    NSString *cacheDir = NSHomeDirectory();
+    NSString * cacheFolder = [[cacheDir stringByAppendingPathComponent:@"Incomplete111"]stringByAppendingPathComponent:@"333"];
+    downloadReq.resumableDownloadPath = cacheFolder;
+    downloadReq.requestSerializerType = SYRequestSerializerTypeHTTP;
+    [downloadReq sendRequest:@"https://images.unsplash.com/photo-1556724600-78e84788fca5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" success:^(__kindof SYNetworkBaseRequest *request) {
+        NSLog(@"");
+    } failure:^(__kindof SYNetworkBaseRequest *request) {
+        NSLog(@"");
+    }];
 }
 
 

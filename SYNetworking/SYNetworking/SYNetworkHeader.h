@@ -34,9 +34,11 @@ typedef NS_ENUM(NSInteger, SYResponseSerializerType) {
 
 
 
-typedef void(^SYCompletionBlock)(__kindof  SYNetworkBaseRequest *request);
-typedef void(^SYProgressBlock)(NSProgress * _Nonnull progress);
-
+typedef void (^SYCompletionBlock)(__kindof  SYNetworkBaseRequest *request);
+typedef void (^SYProgressBlock)(NSProgress * _Nonnull progress);
+//DownloadResumeBlock
+//下载百分比
+typedef void (^AFURLSessionTaskProgressBlock)(NSProgress *progress);
 
 //Post Form Data Block
 typedef void (^AFConstructingBlock)(id<AFMultipartFormData> formData);

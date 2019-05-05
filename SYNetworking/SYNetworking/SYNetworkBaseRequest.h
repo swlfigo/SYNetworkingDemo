@@ -34,6 +34,13 @@
 
 //Timeout Default SYNetworkConfig timeoutSeconds . 可通过子类重写;
 @property (nonatomic, readwrite, assign) NSTimeInterval requestTimeoutInterval;
+
+//下载路径,不设置默认为简单HTTP请求 . 可通过子类重写
+@property (nonatomic, strong, nullable) NSString *resumableDownloadPath;
+
+// 下载百分比Block.
+@property (nonatomic, copy, nullable) AFURLSessionTaskProgressBlock resumableDownloadProgressBlock;
+
 #pragma mark - Request and Response Information
 
 
