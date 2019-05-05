@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C2B525B227A89B200FB263D /* SYNetworkBaseRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B525A227A89B200FB263D /* SYNetworkBaseRequest.m */; };
+		2C2B525E227A8CEF00FB263D /* SYNetworkRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C2B525D227A8CEF00FB263D /* SYNetworkRequest.m */; };
+		2C456A462276ECAA00591912 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A452276ECAA00591912 /* AppDelegate.m */; };
+		2C456A492276ECAA00591912 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A482276ECAA00591912 /* ViewController.m */; };
+		2C456A4C2276ECAA00591912 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C456A4A2276ECAA00591912 /* Main.storyboard */; };
+		2C456A4E2276ECAB00591912 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C456A4D2276ECAB00591912 /* Assets.xcassets */; };
+		2C456A512276ECAB00591912 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C456A4F2276ECAB00591912 /* LaunchScreen.storyboard */; };
+		2C456A542276ECAB00591912 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A532276ECAB00591912 /* main.m */; };
+		2C456A5D2276ED1C00591912 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A5C2276ED1C00591912 /* SYNetworkManager.m */; };
+		2C456A5F2276ED8400591912 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2C456A5E2276ED8400591912 /* Podfile */; };
+		2C8F2E23227E91F400F46AA5 /* SYNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F2E22227E91F400F46AA5 /* SYNetworkPrivate.m */; };
+		2CF3D2EC2277E015008FEC61 /* SYNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF3D2EB2277E015008FEC61 /* SYNetworkConfig.m */; };
+		2CF3D2F622782DA6008FEC61 /* SYNetworkRequestPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF3D2F522782DA6008FEC61 /* SYNetworkRequestPool.m */; };
+		9A9B0CC6E4F72812104FCA5A /* libPods-SYNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 104108F0040F50304E3D604B /* libPods-SYNetworking.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		104108F0040F50304E3D604B /* libPods-SYNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SYNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C2B5259227A89B200FB263D /* SYNetworkBaseRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkBaseRequest.h; sourceTree = "<group>"; };
+		2C2B525A227A89B200FB263D /* SYNetworkBaseRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkBaseRequest.m; sourceTree = "<group>"; };
+		2C2B525C227A8CEF00FB263D /* SYNetworkRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkRequest.h; sourceTree = "<group>"; };
+		2C2B525D227A8CEF00FB263D /* SYNetworkRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkRequest.m; sourceTree = "<group>"; };
+		2C456A412276ECAA00591912 /* SYNetworking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYNetworking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C456A442276ECAA00591912 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2C456A452276ECAA00591912 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2C456A472276ECAA00591912 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2C456A482276ECAA00591912 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2C456A4B2276ECAA00591912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2C456A4D2276ECAB00591912 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2C456A502276ECAB00591912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2C456A522276ECAB00591912 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C456A532276ECAB00591912 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		2C456A5B2276ED1C00591912 /* SYNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkManager.h; sourceTree = "<group>"; };
+		2C456A5C2276ED1C00591912 /* SYNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkManager.m; sourceTree = "<group>"; };
+		2C456A5E2276ED8400591912 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		2C456A602276EF6A00591912 /* SYNetworkHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkHeader.h; sourceTree = "<group>"; };
+		2C8F2E21227E91F400F46AA5 /* SYNetworkPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkPrivate.h; sourceTree = "<group>"; };
+		2C8F2E22227E91F400F46AA5 /* SYNetworkPrivate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkPrivate.m; sourceTree = "<group>"; };
+		2CA0886A22792E3A0043CBF0 /* SYNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworking.h; sourceTree = "<group>"; };
+		2CF3D2EA2277E015008FEC61 /* SYNetworkConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkConfig.h; sourceTree = "<group>"; };
+		2CF3D2EB2277E015008FEC61 /* SYNetworkConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkConfig.m; sourceTree = "<group>"; };
+		2CF3D2F422782DA6008FEC61 /* SYNetworkRequestPool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkRequestPool.h; sourceTree = "<group>"; };
+		2CF3D2F522782DA6008FEC61 /* SYNetworkRequestPool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkRequestPool.m; sourceTree = "<group>"; };
+		51D48311631F842836307AF7 /* Pods-SYNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-SYNetworking/Pods-SYNetworking.release.xcconfig"; sourceTree = "<group>"; };
+		89D2A9ECBE9802E1D7C962F2 /* Pods-SYNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SYNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SYNetworking/Pods-SYNetworking.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2C456A3E2276ECAA00591912 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A9B0CC6E4F72812104FCA5A /* libPods-SYNetworking.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1B84CC3AEFE25902642B4D85 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				104108F0040F50304E3D604B /* libPods-SYNetworking.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C456A382276ECAA00591912 = {
+			isa = PBXGroup;
+			children = (
+				2C456A5E2276ED8400591912 /* Podfile */,
+				2C456A432276ECAA00591912 /* SYNetworking */,
+				2C456A422276ECAA00591912 /* Products */,
+				FDC5D62DF77ECC90E9F510B2 /* Pods */,
+				1B84CC3AEFE25902642B4D85 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2C456A422276ECAA00591912 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C456A412276ECAA00591912 /* SYNetworking.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C456A432276ECAA00591912 /* SYNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				2C456A5A2276ECED00591912 /* SYNetworking */,
+				2C456A442276ECAA00591912 /* AppDelegate.h */,
+				2C456A452276ECAA00591912 /* AppDelegate.m */,
+				2C456A472276ECAA00591912 /* ViewController.h */,
+				2C456A482276ECAA00591912 /* ViewController.m */,
+				2C456A4A2276ECAA00591912 /* Main.storyboard */,
+				2C456A4D2276ECAB00591912 /* Assets.xcassets */,
+				2C456A4F2276ECAB00591912 /* LaunchScreen.storyboard */,
+				2C456A522276ECAB00591912 /* Info.plist */,
+				2C456A532276ECAB00591912 /* main.m */,
+			);
+			path = SYNetworking;
+			sourceTree = "<group>";
+		};
+		2C456A5A2276ECED00591912 /* SYNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				2CA0886A22792E3A0043CBF0 /* SYNetworking.h */,
+				2C456A602276EF6A00591912 /* SYNetworkHeader.h */,
+				2C456A5B2276ED1C00591912 /* SYNetworkManager.h */,
+				2C456A5C2276ED1C00591912 /* SYNetworkManager.m */,
+				2C2B5259227A89B200FB263D /* SYNetworkBaseRequest.h */,
+				2C2B525A227A89B200FB263D /* SYNetworkBaseRequest.m */,
+				2C2B525C227A8CEF00FB263D /* SYNetworkRequest.h */,
+				2C2B525D227A8CEF00FB263D /* SYNetworkRequest.m */,
+				2CF3D2EA2277E015008FEC61 /* SYNetworkConfig.h */,
+				2CF3D2EB2277E015008FEC61 /* SYNetworkConfig.m */,
+				2CF3D2F422782DA6008FEC61 /* SYNetworkRequestPool.h */,
+				2CF3D2F522782DA6008FEC61 /* SYNetworkRequestPool.m */,
+				2C8F2E21227E91F400F46AA5 /* SYNetworkPrivate.h */,
+				2C8F2E22227E91F400F46AA5 /* SYNetworkPrivate.m */,
+			);
+			path = SYNetworking;
+			sourceTree = "<group>";
+		};
+		FDC5D62DF77ECC90E9F510B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				89D2A9ECBE9802E1D7C962F2 /* Pods-SYNetworking.debug.xcconfig */,
+				51D48311631F842836307AF7 /* Pods-SYNetworking.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2C456A402276ECAA00591912 /* SYNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C456A572276ECAB00591912 /* Build configuration list for PBXNativeTarget "SYNetworking" */;
+			buildPhases = (
+				318D1F7152F9F5CB09B258C6 /* [CP] Check Pods Manifest.lock */,
+				2C456A3D2276ECAA00591912 /* Sources */,
+				2C456A3E2276ECAA00591912 /* Frameworks */,
+				2C456A3F2276ECAA00591912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SYNetworking;
+			productName = SYNetworking;
+			productReference = 2C456A412276ECAA00591912 /* SYNetworking.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2C456A392276ECAA00591912 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = iSylar;
+				TargetAttributes = {
+					2C456A402276ECAA00591912 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = 2C456A3C2276ECAA00591912 /* Build configuration list for PBXProject "SYNetworking" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2C456A382276ECAA00591912;
+			productRefGroup = 2C456A422276ECAA00591912 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2C456A402276ECAA00591912 /* SYNetworking */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2C456A3F2276ECAA00591912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C456A512276ECAB00591912 /* LaunchScreen.storyboard in Resources */,
+				2C456A4E2276ECAB00591912 /* Assets.xcassets in Resources */,
+				2C456A5F2276ED8400591912 /* Podfile in Resources */,
+				2C456A4C2276ECAA00591912 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		318D1F7152F9F5CB09B258C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SYNetworking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2C456A3D2276ECAA00591912 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C2B525E227A8CEF00FB263D /* SYNetworkRequest.m in Sources */,
+				2CF3D2F622782DA6008FEC61 /* SYNetworkRequestPool.m in Sources */,
+				2CF3D2EC2277E015008FEC61 /* SYNetworkConfig.m in Sources */,
+				2C456A492276ECAA00591912 /* ViewController.m in Sources */,
+				2C456A542276ECAB00591912 /* main.m in Sources */,
+				2C456A5D2276ED1C00591912 /* SYNetworkManager.m in Sources */,
+				2C2B525B227A89B200FB263D /* SYNetworkBaseRequest.m in Sources */,
+				2C8F2E23227E91F400F46AA5 /* SYNetworkPrivate.m in Sources */,
+				2C456A462276ECAA00591912 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2C456A4A2276ECAA00591912 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C456A4B2276ECAA00591912 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2C456A4F2276ECAB00591912 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2C456A502276ECAB00591912 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2C456A552276ECAB00591912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2C456A562276ECAB00591912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2C456A582276ECAB00591912 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D2A9ECBE9802E1D7C962F2 /* Pods-SYNetworking.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NG779RMVC9;
+				INFOPLIST_FILE = SYNetworking/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.iSylar.SYNetworking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2C456A592276ECAB00591912 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51D48311631F842836307AF7 /* Pods-SYNetworking.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NG779RMVC9;
+				INFOPLIST_FILE = SYNetworking/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.iSylar.SYNetworking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C456A3C2276ECAA00591912 /* Build configuration list for PBXProject "SYNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C456A552276ECAB00591912 /* Debug */,
+				2C456A562276ECAB00591912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C456A572276ECAB00591912 /* Build configuration list for PBXNativeTarget "SYNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C456A582276ECAB00591912 /* Debug */,
+				2C456A592276ECAB00591912 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2C456A392276ECAA00591912 /* Project object */;
+}
