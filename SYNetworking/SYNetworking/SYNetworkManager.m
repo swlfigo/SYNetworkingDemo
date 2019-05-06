@@ -179,10 +179,9 @@
     if (!resumeSucceeded) {
         downloadTask = [_sessionManager downloadTaskWithRequest:urlRequest progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
             return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
-        } completionHandler:
-                        ^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                            [self handleRequestResult:downloadTask responseObject:filePath error:error];
-                        }];
+        } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            [self handleRequestResult:downloadTask responseObject:filePath error:error];
+        }];
     }
     return downloadTask;
 }
@@ -246,7 +245,7 @@
     
     //保存未下载的文件
     NSData *incompleteDownloadData = error.userInfo[NSURLSessionDownloadTaskResumeData];
-    if (incompleteDownloadData) {
+    if (incompleteDownloadData && request) {
         [incompleteDownloadData writeToURL:[self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath] atomically:YES];
     }
     
