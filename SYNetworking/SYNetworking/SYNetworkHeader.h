@@ -17,17 +17,17 @@
 @class SYNetworkBaseRequest;
 ///  Request serializer type.
 typedef NS_ENUM(NSInteger, SYRequestSerializerType) {
-    SYRequestSerializerTypeHTTP = 0,
-    SYRequestSerializerTypeJSON,    //Default
+    SYRequestSerializerTypeHTTP = 0, //Default
+    SYRequestSerializerTypeJSON,
 };
 
 ///  Response serializer type, which determines response serialization process and
 ///  the type of `responseObject`.
 typedef NS_ENUM(NSInteger, SYResponseSerializerType) {
     /// NSData type
-    SYResponseSerializerTypeHTTP,   //Default
+    SYResponseSerializerTypeHTTP,
     /// JSON object type
-    SYResponseSerializerTypeJSON,
+    SYResponseSerializerTypeJSON,   //Default
     /// NSXMLParser type
     SYResponseSerializerTypeXMLParser,
 };
