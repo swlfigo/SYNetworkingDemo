@@ -75,9 +75,9 @@
     AFHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
     switch (method) {
         case SYRequestMethodGET:
-            if (request.resumableDownloadPath) {
+            if (request.downloadFilePath) {
                 //下载操作
-                return [self downloadTaskWithBaseRequest:request DownloadPath:request.resumableDownloadPath requestSerializer:requestSerializer URLString:url parameters:param progress:request.resumableDownloadProgressBlock error:error];
+                return [self downloadTaskWithBaseRequest:request DownloadPath:request.downloadFilePath requestSerializer:requestSerializer URLString:url parameters:param progress:request.resumableDownloadProgressBlock error:error];
             }else{
                 //简单HTTP请求
                return [self dataTaskWithBaseRequest:request HTTPMethod:@"GET" requestSerializer:requestSerializer URLString:url parameters:param error:error];
@@ -133,6 +133,7 @@
                                                 parameters:(id)parameters
                                                   progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
                                                      error:(NSError * _Nullable __autoreleasing *)error {
+    
     NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
     
     NSString *downloadTargetPath;
@@ -246,7 +247,7 @@
     //保存未下载的文件
     NSData *incompleteDownloadData = error.userInfo[NSURLSessionDownloadTaskResumeData];
     if (incompleteDownloadData && request) {
-        [incompleteDownloadData writeToURL:[self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath] atomically:YES];
+        [incompleteDownloadData writeToURL:[self incompleteDownloadTempPathForDownloadPath:request.downloadFilePath] atomically:YES];
     }
     
     //获取Request下载到本地的不完整文件删除
@@ -317,10 +318,10 @@
 
 - (void)cancelRequest:(SYNetworkBaseRequest *)request{
     NSParameterAssert(request != nil);
-    if (request.resumableDownloadPath) {
+    if (request.downloadFilePath) {
         NSURLSessionDownloadTask *requestTask = (NSURLSessionDownloadTask *)request.requestTask;
         [requestTask cancelByProducingResumeData:^(NSData *resumeData) {
-            NSURL *localUrl = [self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath];
+            NSURL *localUrl = [self incompleteDownloadTempPathForDownloadPath:request.downloadFilePath];
             [resumeData writeToURL:localUrl atomically:YES];
         }];
     } else {

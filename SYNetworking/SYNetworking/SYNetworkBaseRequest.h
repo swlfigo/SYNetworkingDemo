@@ -36,16 +36,16 @@
 @property (nonatomic, readwrite, assign) NSTimeInterval requestTimeoutInterval;
 
 //下载路径,不设置默认为简单HTTP请求 . 可通过子类重写
-@property (nonatomic, strong, nullable) NSString *resumableDownloadPath;
+@property (nonatomic, strong, nullable) NSString *downloadFilePath;
 
 // 下载百分比Block.
 @property (nonatomic, copy, nullable) AFURLSessionTaskProgressBlock resumableDownloadProgressBlock;
 
+//是否允许使用蜂窝数据 Default YES . 可通过子类重写
+@property (nonatomic, readwrite, assign) BOOL allowsCellularAccess;
+
 #pragma mark - Request and Response Information
 
-
-//是否允许使用蜂窝数据 Default YES
-@property (nonatomic, readwrite, assign) BOOL allowsCellularAccess;
 
 //Response Obj
 @property (nonatomic, strong, readonly) NSData *responseData;
@@ -79,6 +79,17 @@
 @property (nonatomic, readwrite, copy) SYProgressBlock uploadProgressBlock;
 
 @property (nonatomic, readwrite, copy) SYProgressBlock downloadProgressBlock;
+
+
+#pragma mark - Download Configuration
+
+//文件流.用于文件写入与断点下载.不需要全部加载近内存节省内存空间
+@property (nonatomic, readwrite, strong) NSOutputStream *stream;                      // stream used to save download data
+@property (nonatomic, readwrite, assign) NSInteger totalLength;                       // total length of download file
+@property (nonatomic, readonly, copy)    NSString *resumeDataFilePath;                // resume data file path
+@property (nonatomic, readonly, copy)    NSString *resumeDataInfoFilePath;            // resume data info file path
+
+
 
 #pragma mark - Request Configuartion
 

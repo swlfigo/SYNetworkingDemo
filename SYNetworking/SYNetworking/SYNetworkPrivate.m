@@ -8,6 +8,10 @@
 
 #import "SYNetworkPrivate.h"
 #import <CommonCrypto/CommonDigest.h>
+
+NSString * const SYNetworkCacheBaseFolderName = @"SYNetworkCache";
+
+
 @implementation SYNetworkUtils
 
 + (NSString *)md5StringFromString:(NSString *)string {
@@ -44,6 +48,60 @@
     // complicated structue. Besides, the plist structure is different between iOS 9 and iOS 10.
     // We can only assume that the plist being successfully parsed means the resume data is valid.
     return YES;
+}
+
++ (NSString * _Nonnull)resumeDataFilePathWithRequestIdentifer:(NSString * _Nonnull)requestIdentifer downloadFileName:(NSString * _Nonnull)downloadFileName{
+    NSParameterAssert(requestIdentifer != nil);
+    NSString *dataFileName = [NSString stringWithFormat:@"%@.%@", requestIdentifer, downloadFileName];
+    NSString * resumeDataFilePath = [[self createCacheBasePath] stringByAppendingPathComponent:dataFileName];
+    return resumeDataFilePath;
+}
+
+
++ (NSString * _Nonnull)createBasePathWithFolderName:(NSString * _Nonnull)folderName{
+    
+    NSString *pathOfCache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *path = [pathOfCache stringByAppendingPathComponent:folderName];
+    [self p_createDirectoryIfNeeded:path];
+    return path;
+    
+}
+
+
++ (NSString * _Nonnull)createCacheBasePath{
+    
+    return [self createBasePathWithFolderName:SYNetworkCacheBaseFolderName];
+}
+
++ (void)p_createDirectoryIfNeeded:(NSString *)path {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir;
+    
+    if (![fileManager fileExistsAtPath:path isDirectory:&isDir]) {
+        
+        [self p_createBaseDirectoryAtPath:path];
+        
+    } else {
+        
+        if (!isDir) {
+            
+            NSError *error = nil;
+            [fileManager removeItemAtPath:path error:&error];
+            [self p_createBaseDirectoryAtPath:path];
+        }
+    }
+}
+
+
+
+
++ (void)p_createBaseDirectoryAtPath:(NSString *)path {
+    
+    [[NSFileManager defaultManager] createDirectoryAtPath:path
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:nil];
 }
 
 

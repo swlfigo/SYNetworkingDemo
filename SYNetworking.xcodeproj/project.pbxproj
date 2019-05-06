@@ -17,6 +17,7 @@
 		2C456A542276ECAB00591912 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A532276ECAB00591912 /* main.m */; };
 		2C456A5D2276ED1C00591912 /* SYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C456A5C2276ED1C00591912 /* SYNetworkManager.m */; };
 		2C456A5F2276ED8400591912 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 2C456A5E2276ED8400591912 /* Podfile */; };
+		2C7FE03B228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C7FE03A228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.m */; };
 		2C8F2E23227E91F400F46AA5 /* SYNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C8F2E22227E91F400F46AA5 /* SYNetworkPrivate.m */; };
 		2CF3D2EC2277E015008FEC61 /* SYNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF3D2EB2277E015008FEC61 /* SYNetworkConfig.m */; };
 		2CF3D2F622782DA6008FEC61 /* SYNetworkRequestPool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CF3D2F522782DA6008FEC61 /* SYNetworkRequestPool.m */; };
@@ -43,6 +44,8 @@
 		2C456A5C2276ED1C00591912 /* SYNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkManager.m; sourceTree = "<group>"; };
 		2C456A5E2276ED8400591912 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		2C456A602276EF6A00591912 /* SYNetworkHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkHeader.h; sourceTree = "<group>"; };
+		2C7FE039228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkDownloadResumeDataInfo.h; sourceTree = "<group>"; };
+		2C7FE03A228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkDownloadResumeDataInfo.m; sourceTree = "<group>"; };
 		2C8F2E21227E91F400F46AA5 /* SYNetworkPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworkPrivate.h; sourceTree = "<group>"; };
 		2C8F2E22227E91F400F46AA5 /* SYNetworkPrivate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNetworkPrivate.m; sourceTree = "<group>"; };
 		2CA0886A22792E3A0043CBF0 /* SYNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNetworking.h; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 				2C2B525A227A89B200FB263D /* SYNetworkBaseRequest.m */,
 				2C2B525C227A8CEF00FB263D /* SYNetworkRequest.h */,
 				2C2B525D227A8CEF00FB263D /* SYNetworkRequest.m */,
+				2C7FE039228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.h */,
+				2C7FE03A228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.m */,
 				2CF3D2EA2277E015008FEC61 /* SYNetworkConfig.h */,
 				2CF3D2EB2277E015008FEC61 /* SYNetworkConfig.m */,
 				2CF3D2F422782DA6008FEC61 /* SYNetworkRequestPool.h */,
@@ -244,6 +249,7 @@
 				2C456A542276ECAB00591912 /* main.m in Sources */,
 				2C456A5D2276ED1C00591912 /* SYNetworkManager.m in Sources */,
 				2C2B525B227A89B200FB263D /* SYNetworkBaseRequest.m in Sources */,
+				2C7FE03B228007D1007F92AC /* SYNetworkDownloadResumeDataInfo.m in Sources */,
 				2C8F2E23227E91F400F46AA5 /* SYNetworkPrivate.m in Sources */,
 				2C456A462276ECAA00591912 /* AppDelegate.m in Sources */,
 			);

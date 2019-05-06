@@ -18,6 +18,9 @@
 @property (nonatomic, strong, readwrite) id responseObject;
 @property (nonatomic, strong, readwrite) NSString *responseString;
 @property (nonatomic, strong, readwrite) NSError *error;
+
+@property (nonatomic, readwrite, copy) NSString *resumeDataFilePath;
+@property (nonatomic, readwrite, copy) NSString *resumeDataInfoFilePath;
 @end
 
 @implementation SYNetworkBaseRequest
@@ -56,6 +59,49 @@
     return self.response.allHeaderFields;
 }
 
+
+- (NSString *)resumeDataFilePath{
+    if (_downloadFilePath) {
+        //Request用于下载
+        if (_resumeDataFilePath.length > 0) {
+            
+            return _resumeDataFilePath;
+            
+        }else{
+            
+//            _resumeDataFilePath = [SYNetworkUtils resumeDataFilePathWithRequestIdentifer:_requestIdentifer downloadFileName:_downloadFilePath.lastPathComponent];
+            return _resumeDataFilePath;
+        }
+    }else{
+        return nil;
+    }
+
+}
+
+
+
+
+- (NSString *)resumeDataInfoFilePath{
+    
+//    if (self.requestType == SJRequestTypeDownload) {
+//
+//        if (_resumeDataInfoFilePath.length > 0) {
+//
+//            return _resumeDataInfoFilePath;
+//
+//        }else{
+//
+//            _resumeDataInfoFilePath = [SJNetworkUtils resumeDataInfoFilePathWithRequestIdentifer:_requestIdentifer];
+//            return _resumeDataInfoFilePath;
+//        }
+//
+//    }else{
+    
+        return nil;
+        
+//    }
+    
+}
 
 - (void)start{
     [[SYNetworkManager sharedManager]addRequest:self];

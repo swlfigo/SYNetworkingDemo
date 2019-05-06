@@ -32,7 +32,7 @@
     
     NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     NSString *filePathDes = [path stringByAppendingPathComponent:@"1111.jpg"];
-    downloadReq.resumableDownloadPath = filePathDes;
+    downloadReq.downloadFilePath = filePathDes;
     downloadReq.requestSerializerType = SYRequestSerializerTypeHTTP;
     downloadReq.resumableDownloadProgressBlock = ^(NSProgress * _Nonnull progress) {
       NSLog(@"%f \n\n",progress.completedUnitCount / (progress.totalUnitCount / 1.0));
