@@ -28,17 +28,26 @@
         NSLog(@"");
     }];
     
-    SYNetworkRequest *downloadReq = [[SYNetworkRequest alloc]init];
+    __block SYNetworkRequest *downloadReq = [[SYNetworkRequest alloc]init];
     
-    NSString *cacheDir = NSHomeDirectory();
-    NSString * cacheFolder = [[cacheDir stringByAppendingPathComponent:@"Incomplete111"]stringByAppendingPathComponent:@"333"];
-    downloadReq.resumableDownloadPath = cacheFolder;
+    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+    NSString *filePathDes = [path stringByAppendingPathComponent:@"1111.jpg"];
+    downloadReq.resumableDownloadPath = filePathDes;
     downloadReq.requestSerializerType = SYRequestSerializerTypeHTTP;
+    downloadReq.resumableDownloadProgressBlock = ^(NSProgress * _Nonnull progress) {
+      NSLog(@"%f \n\n",progress.completedUnitCount / (progress.totalUnitCount / 1.0));
+    };
     [downloadReq sendRequest:@"https://images.unsplash.com/photo-1556724600-78e84788fca5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" success:^(__kindof SYNetworkBaseRequest *request) {
         NSLog(@"");
     } failure:^(__kindof SYNetworkBaseRequest *request) {
         NSLog(@"");
     }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [downloadReq stop];
+    });
+    
+
+    
 }
 
 
