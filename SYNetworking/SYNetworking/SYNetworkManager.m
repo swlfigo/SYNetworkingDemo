@@ -356,7 +356,14 @@
 - (NSURL *)incompleteDownloadTempPathForDownloadPath:(NSString *)downloadPath {
     NSString *tempPath = nil;
     //通过下载Path来做MD5运算
-    NSString *md5URLString = [SYNetworkUtils md5StringFromString:downloadPath];
+    NSString *md5URLString = @"";
+    if (TARGET_IPHONE_SIMULATOR) {
+        //因为模拟器每次启动沙盒路径不一样，所以模拟器只需要读取文件名最后做MD5即可
+        md5URLString = [SYNetworkUtils md5StringFromString:downloadPath.lastPathComponent];
+    }else{
+        md5URLString = [SYNetworkUtils md5StringFromString:downloadPath];
+    }
+
     tempPath = [[self incompleteDownloadTempCacheFolder] stringByAppendingPathComponent:md5URLString];
     return [NSURL fileURLWithPath:tempPath];
 }
