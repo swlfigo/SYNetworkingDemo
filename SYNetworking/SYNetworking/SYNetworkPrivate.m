@@ -10,7 +10,7 @@
 #import <CommonCrypto/CommonDigest.h>
 
 NSString * const SYNetworkCacheBaseFolderName = @"SYNetworkCache";
-
+NSString * const SYNetworkDownloadResumeDataInfoFileSuffix = @"resumeInfo";
 
 @implementation SYNetworkUtils
 
@@ -55,6 +55,13 @@ NSString * const SYNetworkCacheBaseFolderName = @"SYNetworkCache";
     NSString *dataFileName = [NSString stringWithFormat:@"%@.%@", requestIdentifer, downloadFileName];
     NSString * resumeDataFilePath = [[self createCacheBasePath] stringByAppendingPathComponent:dataFileName];
     return resumeDataFilePath;
+}
+
++ (NSString * _Nonnull)resumeDataInfoFilePathWithRequestIdentifer:(NSString * _Nonnull)requestIdentifer{
+    
+    NSString * dataInfoFileName = [NSString stringWithFormat:@"%@.%@", requestIdentifer,SYNetworkDownloadResumeDataInfoFileSuffix];
+    NSString * resumeDataInfoFilePath = [[self createCacheBasePath] stringByAppendingPathComponent:dataInfoFileName];
+    return resumeDataInfoFilePath;
 }
 
 
@@ -105,4 +112,18 @@ NSString * const SYNetworkCacheBaseFolderName = @"SYNetworkCache";
 }
 
 
+
++ (SYNetworkDownloadResumeDataInfo *)loadResumeDataInfo:(NSString *)filePath {
+    
+    SYNetworkDownloadResumeDataInfo *dataInfo = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:nil]) {
+        dataInfo = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+        if ([dataInfo isKindOfClass:[SYNetworkDownloadResumeDataInfo class]]) {
+            return dataInfo;
+        }else{
+            return nil;
+        }
+    }
+    return nil;
+}
 @end

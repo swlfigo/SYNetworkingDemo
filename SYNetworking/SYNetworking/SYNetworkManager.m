@@ -154,6 +154,40 @@
         [[NSFileManager defaultManager] removeItemAtPath:downloadTargetPath error:nil];
     }
     
+    //temp download file
+    //第一次请求不会存在路径
+    //下载后才会本地存有resumeinfo
+    //未下载完文件路径
+    NSString *resumDataFilePath = baseRequest.resumeDataFilePath;
+    //未下载完文件描述信息路径
+    NSString *resumeDataInfoFilePath = baseRequest.resumeDataInfoFilePath;
+    
+    
+    //从本地读取是否有断点存储文件描述信息的数据
+    if ([[NSFileManager defaultManager]fileExistsAtPath:resumeDataInfoFilePath]) {
+        //load resume data info
+        SYNetworkDownloadResumeDataInfo *dataInfo = [SYNetworkUtils loadResumeDataInfo:resumeDataInfoFilePath];
+        
+        //If exists , Add to request Header
+        if (dataInfo) {
+            NSInteger resumeDataLength = [dataInfo.resumeDataLength integerValue];
+            if (resumeDataLength > 0) {
+                NSString *range = [NSString stringWithFormat:@"bytes=%zd-", resumeDataLength];
+                [urlRequest setValue:range forHTTPHeaderField:@"Range"];
+            }else{
+                //读取不了断点文件描述则检索本地是否存在断点下载残留文件
+                if ([[NSFileManager defaultManager] fileExistsAtPath:resumDataFilePath]) {
+                    [[NSFileManager defaultManager] removeItemAtPath:resumeDataInfoFilePath error:nil];
+                }
+            }
+        }
+    }else{
+        //不存在断点下载文件
+        SYNetworkDownloadResumeDataInfo  *dataInfo = [[SYNetworkDownloadResumeDataInfo alloc] init];
+        [NSKeyedArchiver archiveRootObject:dataInfo toFile:resumeDataInfoFilePath];
+    }
+    
+    
     BOOL resumeDataFileExists = [[NSFileManager defaultManager] fileExistsAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path];
     NSData *data = [NSData dataWithContentsOfURL:[self incompleteDownloadTempPathForDownloadPath:downloadPath]];
     //检验数据是否完整
@@ -185,6 +219,7 @@
         }];
     }
     return downloadTask;
+    
 }
 
 - (NSURLSessionDataTask *)dataTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest HTTPMethod:(NSString *)method

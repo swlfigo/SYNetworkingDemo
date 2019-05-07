@@ -11,10 +11,11 @@
 #import "SYNetworkBaseRequest.h"
 #import "SYNetworkManager.h"
 #import "SYNetworkConfig.h"
-
+#import "SYNetworkDownloadResumeDataInfo.h"
 //Cache Folder 
 extern NSString * _Nonnull const SYNetworkCacheBaseFolderName;
-
+//Resume Info
+extern NSString * _Nonnull const SYNetworkDownloadResumeDataInfoFileSuffix;
 
 @interface SYNetworkBaseRequest (Setter)
 
@@ -46,6 +47,10 @@ extern NSString * _Nonnull const SYNetworkCacheBaseFolderName;
  */
 + (NSString * _Nonnull)resumeDataFilePathWithRequestIdentifer:(NSString * _Nonnull)requestIdentifer downloadFileName:(NSString * _Nonnull)downloadFileName;
 
+/**
+ * 用于保存断点下载后文件信息(etc.总长度,下载百分比,已下载信息)
+ */
++ (NSString * _Nonnull)resumeDataInfoFilePathWithRequestIdentifer:(NSString * _Nonnull)requestIdentifer;
 
 /**
  *  This method is used to create a folder of a given folder name
@@ -58,7 +63,6 @@ extern NSString * _Nonnull const SYNetworkCacheBaseFolderName;
 
 
 
-
 /**
  *  This method is used to create cache base folder path
  *
@@ -67,4 +71,14 @@ extern NSString * _Nonnull const SYNetworkCacheBaseFolderName;
  */
 + (NSString * _Nonnull)createCacheBasePath;
 
+
+//============================== Load resume data info ==============================//
+
+/**
+ *  This method is used to load resume data info in a given file path
+ *
+ *  @param filePath          file path
+ *
+ */
++ (SYNetworkDownloadResumeDataInfo *_Nullable)loadResumeDataInfo:(NSString *_Nonnull)filePath;
 @end

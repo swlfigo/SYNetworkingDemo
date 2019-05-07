@@ -9,7 +9,7 @@
 #import "SYNetworkBaseRequest.h"
 #import "SYNetworkManager.h"
 #import "SYNetworkConfig.h"
-
+#import "SYNetworkPrivate.h"
 @interface SYNetworkBaseRequest ()
 
 @property (nonatomic, strong, readwrite) NSURLSessionTask *requestTask;
@@ -69,7 +69,7 @@
             
         }else{
             
-//            _resumeDataFilePath = [SYNetworkUtils resumeDataFilePathWithRequestIdentifer:_requestIdentifer downloadFileName:_downloadFilePath.lastPathComponent];
+            _resumeDataFilePath = [SYNetworkUtils resumeDataFilePathWithRequestIdentifer:[NSString stringWithFormat:@"%ld",self.requestTask.taskIdentifier] downloadFileName:_downloadFilePath.lastPathComponent];
             return _resumeDataFilePath;
         }
     }else{
@@ -83,23 +83,23 @@
 
 - (NSString *)resumeDataInfoFilePath{
     
-//    if (self.requestType == SJRequestTypeDownload) {
-//
-//        if (_resumeDataInfoFilePath.length > 0) {
-//
-//            return _resumeDataInfoFilePath;
-//
-//        }else{
-//
-//            _resumeDataInfoFilePath = [SJNetworkUtils resumeDataInfoFilePathWithRequestIdentifer:_requestIdentifer];
-//            return _resumeDataInfoFilePath;
-//        }
-//
-//    }else{
+    if (_downloadFilePath) {
+
+        if (_resumeDataInfoFilePath.length > 0) {
+
+            return _resumeDataInfoFilePath;
+
+        }else{
+
+            _resumeDataInfoFilePath = [SYNetworkUtils resumeDataInfoFilePathWithRequestIdentifer:[NSString stringWithFormat:@"%ld",self.requestTask.taskIdentifier]];
+            return _resumeDataInfoFilePath;
+        }
+
+    }else{
     
         return nil;
-        
-//    }
+    
+    }
     
 }
 
