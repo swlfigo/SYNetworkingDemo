@@ -56,6 +56,10 @@
     return self.response.allHeaderFields;
 }
 
+- (SYRequestType)requestType{
+    return SYRequestTypeOrdinary;
+}
+
 
 - (void)start{
     [[SYNetworkManager sharedManager]addRequest:self];

@@ -15,6 +15,10 @@
 @synthesize requestURL = _requestURL;
 @synthesize requestArgument = _requestArgument;
 
+- (SYRequestType)requestType{
+    return SYRequestTypeOrdinary;
+}
+
 - (void)sendRequest:(NSString *)url success:(SYCompletionBlock)successBlock failure:(SYCompletionBlock)failureBlock{
     _successBlock = successBlock;
     _failureBlock = failureBlock;

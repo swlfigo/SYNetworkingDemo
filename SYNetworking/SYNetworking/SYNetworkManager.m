@@ -75,12 +75,12 @@
     AFHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
     switch (method) {
         case SYRequestMethodGET:
-            if (request.resumableDownloadPath) {
+            if (request.requestType == SYRequestTypeDownload) {
                 //下载操作
                 return [self downloadTaskWithBaseRequest:request DownloadPath:request.resumableDownloadPath requestSerializer:requestSerializer URLString:url parameters:param progress:request.resumableDownloadProgressBlock error:error];
             }else{
                 //简单HTTP请求
-               return [self dataTaskWithBaseRequest:request HTTPMethod:@"GET" requestSerializer:requestSerializer URLString:url parameters:param error:error];
+                return [self dataTaskWithBaseRequest:request HTTPMethod:@"GET" requestSerializer:requestSerializer URLString:url parameters:param error:error];
             }
         case SYRequestMethodPOST:
             return  [self dataTaskWithBaseRequest:request HTTPMethod:@"POST" requestSerializer:requestSerializer URLString:url parameters:param constructingBodyWithBlock:constructingBlock error:error];
@@ -128,11 +128,11 @@
 }
 
 - (NSURLSessionDownloadTask *)downloadTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest DownloadPath:(NSString *)downloadPath
-                                         requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-                                                 URLString:(NSString *)URLString
-                                                parameters:(id)parameters
-                                                  progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
-                                                     error:(NSError * _Nullable __autoreleasing *)error {
+                                        requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+                                                URLString:(NSString *)URLString
+                                               parameters:(id)parameters
+                                                 progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
+                                                    error:(NSError * _Nullable __autoreleasing *)error {
     NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
     
     NSString *downloadTargetPath;
@@ -148,7 +148,7 @@
     } else {
         downloadTargetPath = downloadPath;
     }
-
+    
     if ([[NSFileManager defaultManager] fileExistsAtPath:downloadTargetPath]) {
         [[NSFileManager defaultManager] removeItemAtPath:downloadTargetPath error:nil];
     }
@@ -167,10 +167,17 @@
         @try {
             downloadTask = [_sessionManager downloadTaskWithResumeData:data progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
-            } completionHandler:
-                            ^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                                [self handleRequestResult:downloadTask responseObject:filePath error:error];
-                            }];
+            } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                baseRequest.error = error;
+                if (error && error.code != -999) {
+                    //无法断点下载
+                    if ([[NSFileManager defaultManager]fileExistsAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path]) {
+                        [[NSFileManager defaultManager]removeItemAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path error:nil];
+                    }
+                    
+                }
+                [self handleRequestResult:downloadTask responseObject:filePath error:error];
+            }];
             resumeSucceeded = YES;
         } @catch (NSException *exception) {
             resumeSucceeded = NO;
@@ -187,19 +194,19 @@
 }
 
 - (NSURLSessionDataTask *)dataTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest HTTPMethod:(NSString *)method
-                               requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-                                       URLString:(NSString *)URLString
-                                      parameters:(id)parameters
-                                           error:(NSError * _Nullable __autoreleasing *)error {
+                                requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+                                        URLString:(NSString *)URLString
+                                       parameters:(id)parameters
+                                            error:(NSError * _Nullable __autoreleasing *)error {
     return [self dataTaskWithBaseRequest:baseRequest HTTPMethod:method requestSerializer:requestSerializer URLString:URLString parameters:parameters constructingBodyWithBlock:nil error:error];
 }
 
 - (NSURLSessionDataTask *)dataTaskWithBaseRequest:(SYNetworkBaseRequest*)baseRequest HTTPMethod:(NSString *)method
-                               requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
-                                       URLString:(NSString *)URLString
-                                      parameters:(id)parameters
-                       constructingBodyWithBlock:(nullable void (^)(id <AFMultipartFormData> formData))block
-                                           error:(NSError * _Nullable __autoreleasing *)error {
+                                requestSerializer:(AFHTTPRequestSerializer *)requestSerializer
+                                        URLString:(NSString *)URLString
+                                       parameters:(id)parameters
+                        constructingBodyWithBlock:(nullable void (^)(id <AFMultipartFormData> formData))block
+                                            error:(NSError * _Nullable __autoreleasing *)error {
     NSMutableURLRequest *request = nil;
     
     if (block) {
@@ -224,19 +231,19 @@
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         [self handleRequestResult:dataTask responseObject:responseObject error:error];
     }];
-
+    
     return dataTask;
 }
 
 
 - (void)requestDidSucceedWithRequest:(SYNetworkBaseRequest *)request {
-
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if (request.successBlock) {
             request.successBlock(request);
         }
-
+        
     });
 }
 
@@ -317,11 +324,14 @@
 
 - (void)cancelRequest:(SYNetworkBaseRequest *)request{
     NSParameterAssert(request != nil);
-    if (request.resumableDownloadPath) {
+    if (request.requestType == SYRequestTypeDownload) {
         NSURLSessionDownloadTask *requestTask = (NSURLSessionDownloadTask *)request.requestTask;
         [requestTask cancelByProducingResumeData:^(NSData *resumeData) {
-            NSURL *localUrl = [self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath];
-            [resumeData writeToURL:localUrl atomically:YES];
+            if (requestTask.error == nil || requestTask.error.code == -999) {
+                NSURL *localUrl = [self incompleteDownloadTempPathForDownloadPath:request.resumableDownloadPath];
+                [resumeData writeToURL:localUrl atomically:YES];
+            }
+            
         }];
     } else {
         [request.requestTask cancel];
@@ -363,7 +373,7 @@
     }else{
         md5URLString = [SYNetworkUtils md5StringFromString:downloadPath];
     }
-
+    
     tempPath = [[self incompleteDownloadTempCacheFolder] stringByAppendingPathComponent:md5URLString];
     return [NSURL fileURLWithPath:tempPath];
 }

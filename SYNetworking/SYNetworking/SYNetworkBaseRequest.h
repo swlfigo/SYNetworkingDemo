@@ -41,6 +41,9 @@
 // 下载百分比Block.
 @property (nonatomic, copy, nullable) AFURLSessionTaskProgressBlock resumableDownloadProgressBlock;
 
+// 请求类型. 普通请求或下载请求 
+- (SYRequestType)requestType;
+
 #pragma mark - Request and Response Information
 
 

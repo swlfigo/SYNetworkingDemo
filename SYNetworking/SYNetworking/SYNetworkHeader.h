@@ -21,6 +21,13 @@ typedef NS_ENUM(NSInteger, SYRequestSerializerType) {
     SYRequestSerializerTypeJSON,
 };
 
+typedef NS_ENUM(NSInteger, SYRequestType) {
+    
+    SYRequestTypeOrdinary, //Default
+    SYRequestTypeDownload
+    
+};
+
 ///  Response serializer type, which determines response serialization process and
 ///  the type of `responseObject`.
 typedef NS_ENUM(NSInteger, SYResponseSerializerType) {
