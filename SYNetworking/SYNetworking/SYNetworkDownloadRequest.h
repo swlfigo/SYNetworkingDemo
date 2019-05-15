@@ -10,11 +10,20 @@
 
 @interface SYNetworkDownloadRequest : SYNetworkBaseRequest
 
+//Default Resumeable YES
 -(void)sendDownloadRequest:(NSString*)url
         downloadFilePath:(NSString *_Nonnull)downloadFilePath
         progress:(SYProgressBlock _Nullable)downloadProgressBlock
         success:(SYCompletionBlock _Nullable)downloadSuccessBlock
         failure:(SYCompletionBlock _Nullable)downloadFailureBlock;
+
+
+-(void)sendDownloadRequest:(NSString*)url
+       resumable:(BOOL)resumable
+       downloadFilePath:(NSString *_Nonnull)downloadFilePath
+       progress:(SYProgressBlock _Nullable)downloadProgressBlock
+       success:(SYCompletionBlock _Nullable)downloadSuccessBlock
+       failure:(SYCompletionBlock _Nullable)downloadFailureBlock;
 
 @end
 

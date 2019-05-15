@@ -163,7 +163,7 @@
     __block NSURLSessionDownloadTask *downloadTask = nil;
     // Try to resume with resumeData.
     // Even though we try to validate the resumeData, this may still fail and raise excecption.
-    if (canBeResumed) {
+    if (canBeResumed && baseRequest.isResumable) {
         @try {
             downloadTask = [_sessionManager downloadTaskWithResumeData:data progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                 return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
@@ -184,6 +184,9 @@
         }
     }
     if (!resumeSucceeded) {
+        if ([[NSFileManager defaultManager]fileExistsAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path]) {
+            [[NSFileManager defaultManager]removeItemAtPath:[self incompleteDownloadTempPathForDownloadPath:downloadPath].path error:nil];
+        }
         downloadTask = [_sessionManager downloadTaskWithRequest:urlRequest progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
             return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {

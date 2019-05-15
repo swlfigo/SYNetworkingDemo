@@ -18,6 +18,7 @@
 @property (nonatomic, strong, readwrite) id responseObject;
 @property (nonatomic, strong, readwrite) NSString *responseString;
 @property (nonatomic, strong, readwrite) NSError *error;
+
 @end
 
 @implementation SYNetworkBaseRequest
@@ -26,6 +27,7 @@
 {
     self = [super init];
     if (self) {
+        _isResumable = YES;
         _requestURL = @"";
         _requestMethod = SYRequestMethodGET;
         _responseSerializerType = SYResponseSerializerTypeJSON;

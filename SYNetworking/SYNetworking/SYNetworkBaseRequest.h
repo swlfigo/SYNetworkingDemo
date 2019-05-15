@@ -45,7 +45,8 @@
 - (SYRequestType)requestType;
 
 #pragma mark - Request and Response Information
-
+//是否只是断点续传
+@property (nonatomic, readwrite, assign) BOOL isResumable;
 
 //是否允许使用蜂窝数据 Default YES
 @property (nonatomic, readwrite, assign) BOOL allowsCellularAccess;
