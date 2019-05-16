@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "SYNetworkHeader.h"
+
+
+@class SYNetworkBaseRequest;
+@protocol SYNetworkRequestDelegate <NSObject>
+
+@optional
+
+- (void)requestFinished:(__kindof SYNetworkBaseRequest *)request;
+
+- (void)requestFailed:(__kindof SYNetworkBaseRequest *)request;
+
+@end
+
+
 @interface SYNetworkBaseRequest : NSObject
 
 
@@ -45,6 +59,9 @@
 - (SYRequestType)requestType;
 
 #pragma mark - Request and Response Information
+
+@property (nonatomic, weak)id <SYNetworkRequestDelegate> delegate;
+
 //是否只是断点续传
 @property (nonatomic, readwrite, assign) BOOL isResumable;
 

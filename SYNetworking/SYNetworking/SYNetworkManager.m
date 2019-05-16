@@ -243,6 +243,10 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        if (request.delegate && [request.delegate respondsToSelector:@selector(requestFinished:)]) {
+            [request.delegate requestFinished:request];
+        }
+        
         if (request.successBlock) {
             request.successBlock(request);
         }
@@ -270,6 +274,11 @@
         request.responseObject = nil;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        if (request.delegate && [request.delegate respondsToSelector:@selector(requestFailed:)]) {
+            [request.delegate requestFailed:request];
+        }
+        
         if (request.failureBlock) {
             request.failureBlock(request);
         }
