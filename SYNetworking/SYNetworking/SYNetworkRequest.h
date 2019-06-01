@@ -21,5 +21,13 @@
         parameters:(NSDictionary*)parameters
         success:(SYCompletionBlock _Nullable)successBlock
         failure:(SYCompletionBlock _Nullable)failureBlock;
+
+- (void)sendPostRequest:(NSString * _Nonnull)url
+        parameters:(NSDictionary*)parameters
+        constructingBodyBlock:(AFConstructingBlock)constructingBodyBlock
+        success:(SYCompletionBlock _Nullable)successBlock
+        failure:(SYCompletionBlock _Nullable)failureBlock;
+
+
 @end
 

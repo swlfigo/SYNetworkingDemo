@@ -13,5 +13,6 @@
 #import "SYNetworkConfig.h"
 #import "SYNetworkRequestPool.h"
 #import "SYNetworkRequest.h"
+#import "SYNetworkDownloadRequest.h"
 
 #endif /* SYNetworking_h */
